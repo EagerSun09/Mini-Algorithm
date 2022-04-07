@@ -3,6 +3,7 @@
 
 class Solution {
     public boolean isValid(String s) {
+        // This means there's no way we have valid parenthese
         if(s.length() % 2 == 1){
             return false;
         }
@@ -12,12 +13,16 @@ class Solution {
         int len = s.length();
         
         for(int i = 0; i < len; i++){
+            // Insert ([{ first
             if(s.charAt(i) == '(' || s.charAt(i) == '[' || s.charAt(i) == '{'){
                 left.push(s.charAt(i));
             }else{
+                // If we try to inser )]} before having anything, this must be invalid
                 if(left.isEmpty())
                     return false;
+                // Get top thing
                 char top = left.pop();
+                // If doesn't match
                 if(top != '(' && s.charAt(i) == ')'){
                     return false;
                 }else if(top != '[' && s.charAt(i) == ']'){
@@ -27,7 +32,7 @@ class Solution {
                 }
             }
         }
-        
+        // If there's still somthing in stack, not valid
         return left.isEmpty();
     }
 }
