@@ -8,12 +8,16 @@
 
 class Solution {
     public int lastStoneWeight(int[] stones) {
+        // Sort from smallest to largest
         Arrays.sort(stones);
+        // Starting from the biggest stone
         int end = stones.length - 1;
         while(end > 0){
+            // If same, we simply move left twice(ignore them)
             if(stones[end] == stones[end-1]){
                 end -= 2;
             }else{
+                // If not same, we ignore bigger one and update smaller one
                 stones[end-1] = stones[end] - stones[end-1];
                 Arrays.sort(stones);
                 end -= 1;
