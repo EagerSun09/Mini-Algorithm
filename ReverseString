@@ -1,0 +1,14 @@
+// input ['a','b','c']
+// output ['c','b','a']
+
+class Solution {
+    public void reverseString(char[] s) {
+        int len = s.length;
+        // only walk half of array, change i-th letter and (length-i-1)th letter
+        for(int i = 0; i < len/2; i++){
+            char temp = s[i];
+            s[i] = s[len-i-1];
+            s[len-i-1] = temp;
+        }
+    }
+}
