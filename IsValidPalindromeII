@@ -1,0 +1,34 @@
+// Given a string s, return true if the s can be palindrome after deleting at most one character from it.
+
+class Solution {
+    public boolean validPalindrome(String s) {
+        // i is the starting position and j is the ending position
+        int i = 0;
+        int j = s.length()-1;
+        while(i <= j){
+            // if match, keep moving
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
+            }else{
+                // if not match, we move one of two pointer once
+                return (helper(s, i+1, j) || helper(s, i, j-1));
+            }
+        }
+        return true;
+    }
+    
+    public boolean helper(String s, int i, int j){
+        while(i <= j){
+            // if match, keep moving
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
+            }else{
+            // if not match, since we've already deleted one letter, return false
+                return false;
+            }
+        }
+        return true;
+    }
+}
