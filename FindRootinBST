@@ -26,12 +26,13 @@ class Solution {
     TreeNode res = new TreeNode(0);
     
     public TreeNode searchBST(TreeNode root, int val) {
+    // if nothing or locate wanted root, return it
         if(root==null || root.val==val)
             return root;
-        
+        // if current bigger than wanted val
         if(root.val > val)
             return searchBST(root.left, val);
-        
+        // if current smaller than wanted val
         return searchBST(root.right, val);
     }
 }
