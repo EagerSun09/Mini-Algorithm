@@ -30,12 +30,13 @@ output:
  * }
  */
 class Solution {
+      // store the nodes need to be changed
     TreeNode pos1 = null;
     TreeNode pos2 = null;
     TreeNode previous = null;
     public void recoverTree(TreeNode root) {
         helper(root);
-        
+        // swap
         int temp = pos1.val;
         pos1.val = pos2.val;
         pos2.val = temp;
@@ -45,9 +46,8 @@ class Solution {
         if(root == null){
             return ;
         }
-        
         helper(root.left);
-        
+        // if current is smalle than it's previous, they need to be swaped
         if(previous!=null && root.val<previous.val){
             if(pos1 == null){
                 pos1 = previous;
