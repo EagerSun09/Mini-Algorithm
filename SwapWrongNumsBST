@@ -1,0 +1,61 @@
+input: 3
+      / \
+     1   4
+        /
+       2
+output:
+    2
+   / \
+  1   4
+     /
+    3
+
+
+
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    TreeNode pos1 = null;
+    TreeNode pos2 = null;
+    TreeNode previous = null;
+    public void recoverTree(TreeNode root) {
+        helper(root);
+        
+        int temp = pos1.val;
+        pos1.val = pos2.val;
+        pos2.val = temp;
+    }
+    
+    public void helper(TreeNode root){
+        if(root == null){
+            return ;
+        }
+        
+        helper(root.left);
+        
+        if(previous!=null && root.val<previous.val){
+            if(pos1 == null){
+                pos1 = previous;
+            }
+            pos2 = root;
+        }
+
+        previous = root;
+        helper(root.right);
+    }
+}
