@@ -1,0 +1,19 @@
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        //set first string as prefix
+        String pre = strs[0];
+        
+        //get strings one by one
+        for(String s:strs){
+            // if doesn't exist prefix, prefix shorten by 1
+            while(s.indexOf(pre)!=0){
+                pre = pre.substring(0,pre.length()-1);
+            }
+        }
+        
+        return pre;
+    }
+}
