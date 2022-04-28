@@ -5,7 +5,8 @@ Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 //Second, hash map
 
 class Solution {
-    public int[] twoSum(int[] nums, int target) {
+    public int[] twoSum(int[] nums, int target) 
+    //intuitive way, two loops get every combination and calculate their sums
 //         for(int i=0; i<nums.length; i++){
 //             for(int j=i+1; j<nums.length; j++){
 //                 if(nums[i]+nums[j] == target){
@@ -16,14 +17,17 @@ class Solution {
 //         }
         
 //         return null;
+
         Map<Integer,Integer> map = new HashMap<>();
         for(int i = 0;i<nums.length; i++){
             int curr = nums[i];
             int resi = target-curr;
             if(map.containsKey(resi)){
+            // this means we can get the target
                 int[] res = new int[]{i,map.get(resi)};
                 return res;
             }else{
+            // we can't get target yet, we store this value and its index
                 map.put(curr, i);
             }
         }
