@@ -1,0 +1,35 @@
+Input: nums = [3,2,2,3], val = 3
+Output: 2, nums = [2,2,_,_]
+Explanation: Your function should return k = 2, with the first two elements of nums being 2.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        //get number of val in nums
+        int count = 0;
+        for(int i = 0; i<nums.length; i++){
+            if(nums[i] == val){
+                count++;
+            }
+        }
+        
+        //point at last number in nums
+        int end = 1;
+        
+        for(int i = 0; i<nums.length-count; i++){
+            //if the number pointed by pointer is equal to val, move left
+            if(nums[i] == val){
+                while(nums[nums.length-end]==val){
+                    end += 1;
+                }
+                //swap
+                nums[i] =  nums[nums.length-end];
+                nums[nums.length-end] = val;
+            }
+        }
+        
+        return nums.length-count;
+        
+        
+    }
+}
