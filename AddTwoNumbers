@@ -1,0 +1,66 @@
+input:
+9->9->9
+9->9
+output:
+8->0->0->1
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        //if one of two list is null, return another one
+        if(l1 == null){
+            return l2;
+        }else if(l2 == null){
+            return l1;
+        }
+        
+        //result list
+        ListNode head = new ListNode();
+        ListNode pointer = head;
+        //check if previous sum is bigger than 10
+        int flag = 0;
+        
+        //walk through list, add them
+        while(l1!=null && l2!=null){
+            int temp = (l1.val+l2.val+flag)%10;
+            flag = (l1.val+l2.val+flag)/10;
+            pointer.next = new ListNode(temp);
+            pointer = pointer.next;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        //one list is longer case
+        while(l1 != null){
+            int temp = (l1.val+flag)%10;
+            flag = (l1.val+flag)/10;
+            pointer.next = new ListNode(temp);
+            pointer = pointer.next;
+            l1 = l1.next;
+        }
+        while(l2 != null){
+            int temp = (l2.val+flag)%10;
+            flag = (l2.val+flag)/10;
+            pointer.next = new ListNode(temp);
+            pointer = pointer.next;
+            l2 = l2.next;
+        }
+        //if flag is not zero, we need one more node
+        if(flag != 0){
+            pointer.next = new ListNode(flag);
+        }
+        
+        return head.next;
+    }
+}
