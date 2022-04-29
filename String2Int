@@ -1,0 +1,49 @@
+handle the case when string is out of the bound of int
+
+class Solution {
+    public int myAtoi(String s) {
+        int len = s.length();
+        //to store the result
+        long res = 0;
+        Integer neg = null;
+        for(int i=0; i<len; i++){
+            //leading space
+            if(s.charAt(i) == ' ' && neg==null && res==0){
+                continue;
+            }
+            
+            //if negative
+            if(s.charAt(i)=='-' && neg==null){
+                neg = -1;
+                continue;
+            }
+            //if positive
+            if(s.charAt(i)=='+' && neg==null){
+                neg = 1;
+                continue;
+            }
+            
+            //if digits
+            if('0'<=s.charAt(i) && s.charAt(i)<='9'){
+                if(neg==null) neg=1;
+                res = res*10 + s.charAt(i)-'0';
+                //if exceed bound
+                if(neg*res >= Integer.MAX_VALUE) 
+                    return Integer.MAX_VALUE;
+                if(neg*res <= Integer.MIN_VALUE) 
+                    return Integer.MIN_VALUE;
+                continue;
+            }
+            
+            //if letters before digit or consecutive+--+
+            break;
+        }
+        
+        if(neg==null){
+            neg=1;
+        }else{
+            return (int)(neg*res);
+        }
+        return 0;
+    }
+}
