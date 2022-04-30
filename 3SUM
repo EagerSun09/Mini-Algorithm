@@ -1,0 +1,46 @@
+Input: nums = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        //from smallest to largest
+        Arrays.sort(nums);
+        //result list
+        List<List<Integer>> res = new ArrayList<>();
+        
+        for(int i=0; i<nums.length; i++){
+            //if i is repeated
+            if(i>0 && nums[i]==nums[i-1]){
+                continue;
+            }
+            
+            int j = i+1;
+            int k = nums.length-1;
+            
+            while(j<k){
+                //sum
+                int sum = nums[i] + nums[j] + nums[k];
+                
+                if(sum>0){
+                    //to lower the sum
+                    k--;
+                }else if(sum<0){
+                    //to larger the sum
+                    j++;
+                }else{
+                    //if sum is 0
+                    List<Integer> temp = new ArrayList<>();
+                    temp.add(nums[i]);
+                    temp.add(nums[j]);
+                    temp.add(nums[k]);
+                    res.add(temp);
+                    k--;
+                    //if repeat
+                    while(j<k && nums[k+1]==nums[k]) k--;
+                }
+            }
+        }
+        
+        return res;
+    }
+}
