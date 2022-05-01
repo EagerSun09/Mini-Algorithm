@@ -1,0 +1,54 @@
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }012345
+ * }
+ */
+class Solution {
+    public int total = 0;
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        //if empty string or length = 1
+        if (head == null || head.next == null) {
+            return null;
+        }
+    
+        ListNode temp = head;
+        
+        //count length of string
+        while(temp!=null){
+            total++;
+            temp = temp.next;
+        }
+        
+        //preparation
+        int count = 0;
+        ListNode pre = null;
+        ListNode cur = null;
+        temp = head;
+        
+        //get the node before the one we will delete
+        while(temp!=null){
+            count++;
+            if(count == (total-n+1)){
+                cur = temp;
+                break;
+            }
+            pre = temp;
+            temp = temp.next;
+        }
+        //if pre == null, we need to delete first node
+        if(pre==null){
+            return head.next;
+        }else{
+            pre.next = pre.next.next;
+            return head;
+        }
+    }
+}
