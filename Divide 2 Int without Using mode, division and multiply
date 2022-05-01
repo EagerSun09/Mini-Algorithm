@@ -1,0 +1,41 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        //if exceed upper bound
+        if(dividend == Integer.MIN_VALUE && divisor==-1){
+            return Integer.MAX_VALUE;
+        }
+        
+        //receive inputs
+        long L = dividend;
+        long R = divisor;
+        
+        int count = 0;
+        int neg = 1;
+        
+        //if negative
+        if(L<0){
+            neg *= -1;
+            L = (long)Math.abs(L);
+        }
+        
+        if(R <0){
+            neg *= -1;
+            R = (long)Math.abs(R);
+        }
+        
+        //while L is bigger or qual to R, L could still be divided by R
+        while(L >= R){
+            //power
+            int pow = 0;
+            //to shorten the runtime by using term pow
+            while(L - (R<<1<<pow) >=0){
+                pow++;
+            }
+            
+            count += 1<<pow;
+            L -= R<<pow;
+        }
+        
+        return neg*count;
+    }
+}
