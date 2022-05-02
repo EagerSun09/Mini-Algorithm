@@ -1,0 +1,34 @@
+Input: nums = [3,1,2,4]
+Output: [2,4,3,1]
+Explanation: The outputs [4,2,3,1], [2,4,1,3], and [4,2,1,3] would also be accepted.
+
+class Solution {
+    public int[] sortArrayByParity(int[] nums) {
+        //if empty array
+        if(nums == null) return nums;
+        //two pointer, one for odd and another for even
+        int L = 0;
+        int R = nums.length-1;
+        //before the meet(i.e. before we finish)
+        while(L!=R){
+            //if even is on the left
+            if(nums[L]%2 == 0){
+                L++;
+                continue;
+            }
+            //if odd is on the right
+            if(nums[R]%2 == 1){
+                R--;
+                continue;
+            }
+            //swap
+            int temp = nums[L];
+            nums[L] = nums[R];
+            nums[R] = temp;
+            
+        }
+        
+        return nums;
+        
+    }
+}
