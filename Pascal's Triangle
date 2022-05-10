@@ -1,0 +1,32 @@
+Input: numRows = 5
+Output: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        //edge case
+        if(numRows == 0) return null;
+        
+        //store the final result
+        List<List<Integer>> res = new ArrayList<>();
+        
+        //walk through each row
+        for(int i=1; i<=numRows; i++){
+            //store each row
+            List<Integer> temp = new ArrayList<>();
+            for(int j=1; j<=i; j++){
+                //the firs and last number is 1
+                if(j==1 || j==i){
+                    temp.add(1);
+                }else{
+                    //calculate current value
+                    List<Integer> temp2 = res.get(i-2);
+                    temp.add(temp2.get(j-2)+temp2.get(j-1));
+                }
+            }
+            //add rows to result
+            res.add(temp);
+        }
+        
+        return res;
+    }
+}
