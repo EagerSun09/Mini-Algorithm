@@ -1,0 +1,20 @@
+Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        HashSet<Integer> res = new HashSet<>();
+        
+        //two pointer, start points at the previous nums
+        int start = 0;
+        int curr = 0;
+        
+        while(curr < nums.length){
+            //if length bigger than k
+            if(curr-start > k) res.remove(nums[start++]);
+            if(res.contains(nums[curr])) return true;
+            res.add(nums[curr++]);
+        }
+        
+        return false;
+    }
+}
