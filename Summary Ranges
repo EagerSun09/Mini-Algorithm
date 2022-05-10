@@ -1,0 +1,27 @@
+Input: nums = [0,1,2,4,5,7]
+Output: ["0->2","4->5","7"]
+Explanation: The ranges are:
+[0,2] --> "0->2"
+[4,5] --> "4->5"
+[7,7] --> "7"
+
+class Solution {
+    public List<String> summaryRanges(int[] nums) {
+        List<String> res = new ArrayList<>();
+        
+        for(int i=0; i<nums.length; i++){
+            //leftmost number
+            int start = nums[i];
+            //while numbers meet constraint
+            while(i+1<nums.length && nums[i+1]==nums[i]+1) i++;
+            //add different type of string
+            if(start != nums[i]){
+                res.add(""+start+"->"+nums[i]);
+            }else{
+                res.add(""+nums[i]);
+            }
+        }
+        
+        return res;
+    }
+}
