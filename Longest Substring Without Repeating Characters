@@ -1,0 +1,30 @@
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        //empty string
+        if(s==null || s.length()==0) return 0;
+        //initialize max length
+        int max = 1;
+        int len = s.length();
+        //start of substring and end of it
+        int l=0, r=1;
+        HashSet<Character> temp = new HashSet<>();
+        temp.add(s.charAt(0));
+        while(r<len){
+            //if repeat
+            while(temp.contains(s.charAt(r))){
+                temp.remove(s.charAt(l));
+                l++;
+                
+            }
+            temp.add(s.charAt(r));
+            max = Math.max(max, r-l+1);
+            r++;
+        }
+        
+        return max;
+    }
+}
