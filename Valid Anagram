@@ -1,0 +1,30 @@
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+ 
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        //use something like barrel sort
+        int lenS = s.length();
+        int lenT = t.length();
+        
+        int[] res = new int[52];
+        //add 1 into corresponding barrel
+        for(int i=0; i<lenS; i++){
+            res[s.charAt(i)-'a']++;
+        }
+        //remove 1 from correpsonding barrel
+        for(int j=0; j<lenT; j++){
+            res[t.charAt(j)-'a']--;
+        }
+        //check each barrel, if diff from 0, false
+        for(int k=0; k<52; k++){
+            if(res[k] != 0)
+                return false;
+        }
+        
+        return true;
+    }
+}
