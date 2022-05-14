@@ -1,0 +1,38 @@
+Input: n = 4
+Output: "1211"
+Explanation:
+countAndSay(1) = "1"
+countAndSay(2) = say "1" = one 1 = "11"
+countAndSay(3) = say "11" = two 1's = "21"
+countAndSay(4) = say "21" = one 2 + one 1 = "12" + "11" = "1211"
+
+class Solution {
+    public String countAndSay(int n) {
+    //recursive solution
+        String res = helper(n);
+        return res;
+    }
+    
+    public String helper(int n){
+    //if edge case
+        if(n == 1) return "1";
+        
+        String temp = helper(n-1);
+        String res = "";
+        
+        int index = 0;
+        int len = temp.length();
+        while(index<len){
+            char curr = temp.charAt(index);
+            int count = 0;
+            //while same character, keep checking next one
+            while(index<len && temp.charAt(index)==curr){
+                index++;
+                count++;
+            }
+            //add count and number into result string
+            res += Integer.toString(count) + curr;
+        }
+        return res;
+    }
+}
