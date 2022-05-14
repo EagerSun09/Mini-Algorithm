@@ -1,0 +1,42 @@
+class MyStack {
+    //using 2 queues to simulate
+    Queue<Integer> inner1;
+    Queue<Integer> inner2;
+    public MyStack() {
+        inner1 = new LinkedList<>();
+        inner2 = new LinkedList<>();
+    }
+    
+    public void push(int x) {
+        //into another one to reverse the order
+        while(!inner1.isEmpty()){
+            inner2.add(inner1.remove());
+        }
+        inner1.add(x);
+        while(!inner2.isEmpty()){
+            inner1.add(inner2.remove());
+        }
+        
+    }
+    
+    public int pop() {
+        return inner1.remove();
+    }
+    
+    public int top() {
+        return inner1.peek();
+    }
+    
+    public boolean empty() {
+        return inner1.isEmpty();
+    }
+}
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * boolean param_4 = obj.empty();
+ */
