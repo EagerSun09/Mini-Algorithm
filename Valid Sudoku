@@ -1,0 +1,55 @@
+Input: board = 
+[["5","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+Output: true
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        int row = board.length;
+        int col = board[0].length;
+        //check each row and col
+        for(int r = 0; r<row; r++){
+            HashSet<Character> rowNum = new HashSet<>();
+            HashSet<Character> colNum = new HashSet<>();
+            for(int c = 0; c<col; c++){
+                if(board[r][c]!= '.' && rowNum.contains(board[r][c])){
+                    return false;
+                }else{
+                    rowNum.add(board[r][c]);
+                }
+                if(board[c][r]!= '.' && colNum.contains(board[c][r])){
+                    return false;
+                }else{
+                    colNum.add(board[c][r]);
+                }
+            }
+        }
+        //check each square by going to the middle number
+        for(int i=1; i<row; i+=3){
+            for(int j=1; j<col; j+=3){
+                HashSet<Character> sqr = new HashSet<>();
+                //3*3=9 directions including middle number itself
+                int[] dir = new int[]{-1,0,1};
+                for(int a:dir){
+                    for(int b:dir){
+                        if (board[i+a][j+b]!= '.' && sqr.contains(board[i+a][j+b])){
+                            return false;
+                        }else{
+                            sqr.add(board[i+a][j+b]);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return true;
+        
+    }
+}
