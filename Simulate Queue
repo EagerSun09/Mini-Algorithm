@@ -1,0 +1,41 @@
+class MyQueue {
+    Stack<Integer> inner1;
+    Stack<Integer> inner2;
+    public MyQueue() {
+        inner1 = new Stack<>();
+        inner2 = new Stack<>();
+    }
+    
+    public void push(int x) {
+    //reverse the order by using two stacks
+        while(!inner1.isEmpty()){
+            inner2.push(inner1.pop());
+        }
+        inner1.push(x);
+        while(!inner2.isEmpty()){
+            inner1.push(inner2.pop());
+        }
+    }
+    
+    public int pop() {
+        return inner1.pop();
+    }
+    
+    public int peek() {
+        return inner1.peek();
+        
+    }
+    
+    public boolean empty() {
+        return inner1.isEmpty();
+    }
+}
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * boolean param_4 = obj.empty();
+ */
