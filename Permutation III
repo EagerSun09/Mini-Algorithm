@@ -1,0 +1,32 @@
+Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
+
+class Solution {
+    List<Integer> temp = new ArrayList<>();
+    List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        Arrays.sort(nums);
+        boolean[] seen = new boolean[nums.length];
+        helper(nums, seen);
+        return res;
+    }
+    
+    public void helper(int[] nums, boolean[] seen){
+    //if we find one
+        if(temp.size() == nums.length){
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+        
+        for(int i=0; i<nums.length; i++){
+        //if num used
+            if(seen[i] == true) continue;
+            //if duplicate number
+            if(i>0 && nums[i]==nums[i-1] && !seen[i-1]) continue;
+            temp.add(nums[i]);
+            seen[i] = true;
+            helper(nums, seen);
+            temp.remove(temp.size()-1);
+            seen[i] = false;
+        }
+    }
+}
