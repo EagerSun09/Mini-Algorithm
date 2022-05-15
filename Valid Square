@@ -1,0 +1,18 @@
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        long m = 1;
+        //while pow of m is still smaller than num
+        while(m*m < num){
+            m++;
+            
+        }
+        //if pow is bigger, not valid
+        if(m*m > num){
+                return false;
+        }else{
+            //if pow is same as num, valide
+            return true;
+        }
+        
+    }
+}
