@@ -1,0 +1,15 @@
+Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1.
+
+class Solution {
+    public int firstUniqChar(String s) {
+        for(int i=0; i<s.length(); i++){
+        //every char in temp except ith
+            String temp = s.substring(0,i) + s.substring(i+1,s.length());
+            if(temp.indexOf(s.charAt(i)) == -1){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+}
