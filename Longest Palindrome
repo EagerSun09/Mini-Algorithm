@@ -1,0 +1,26 @@
+Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
+
+Letters are case sensitive, for example, "Aa" is not considered a palindrome here.
+
+class Solution {
+    public int longestPalindrome(String s) {
+        int[] res = new int[200];
+        //count occurence of each char
+        for(char c:s.toCharArray()){
+            res[c]++;
+        }
+        int len = 0;
+        int odd = 0;
+        //if even occurence add all; if odd, add odd-1 and let odd = 1;
+        for(int c:res){
+            if(c%2==0){
+                len += c;
+            }else{
+                len += c-1;
+                odd = 1;
+            }
+        }
+        
+        return len+odd;
+    }
+}
