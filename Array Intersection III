@@ -1,0 +1,29 @@
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays 
+and you may return the result in any order.
+
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+        HashMap<Integer, Integer> myMap = new HashMap<>();
+        //get times each num in nums1 appeared
+        for(int i=0; i<len1; i++){
+            myMap.put(nums1[i],myMap.getOrDefault(nums1[i],0)+1);
+        }
+        ArrayList<Integer> res = new ArrayList<>();
+        //get nums appeared in both nums1 and nums2
+        for(int i=0; i<len2; i++){
+            if(myMap.containsKey(nums2[i]) && myMap.get(nums2[i])>0){
+                res.add(nums2[i]);
+                myMap.put(nums2[i],myMap.get(nums2[i])-1);
+            }
+        }
+        
+        int[] ans = new int[res.size()];
+        for(int i=0; i<res.size(); i++){
+            ans[i] = res.get(i);
+        }
+        
+        return ans;
+    }
+}
