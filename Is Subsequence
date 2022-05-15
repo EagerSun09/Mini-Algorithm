@@ -1,0 +1,35 @@
+Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+
+A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        //edge cases: if one of them is null or empty
+        if(s==null || s.equals(""))
+            return true;
+        if(t==null || t.equals(""))
+            return false;
+        
+        int i = 0;
+        int j = 0;
+        //start matching
+        while(i<s.length()){
+        //get i-th char from s
+            String temp = s.charAt(i)+"";
+            if(t.indexOf(temp) != -1){
+                //if we find it in t
+                j = t.indexOf(temp);
+                t = t.substring(j+1, t.length());
+                i++;
+            }else{
+                //if we can't find it in t
+                return false;
+            }
+        }
+        
+        //if i>=s.length(), we match every char in s to t
+        if(i>=s.length())
+            return true;
+        else
+            return false;
+    }
+}
