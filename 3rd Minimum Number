@@ -1,0 +1,26 @@
+Given an integer array nums, return the third distinct maximum number in this array. If the third maximum does not exist, return the maximum number.
+
+class Solution {
+    public int thirdMax(int[] nums) {
+        //in increasing trend
+        Arrays.sort(nums);
+        
+        //if not enough numbers
+        if(nums.length < 3)
+            return nums[nums.length-1];
+        
+        int count = 1;
+        //get 3rd minimum
+        for(int i=nums.length-2; i>=0; i--){
+            if(nums[i] != nums[i+1]){
+                count++;
+                if(count == 3)
+                    return nums[i];
+            }else{
+                continue;
+            }
+        }
+        //if not enough number, return largest
+        return nums[nums.length-1];
+    }
+}
