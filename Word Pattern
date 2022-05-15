@@ -1,0 +1,35 @@
+Input: pattern = "abba", s = "dog cat cat dog"
+Output: true
+
+class Solution {
+    public boolean wordPattern(String pattern, String s) {
+        String[] s2 = s.split(" ");
+        char[] p2 = pattern.toCharArray();
+        
+        int len1 = s2.length;
+        int len2 = p2.length;
+        
+        //if length diff, they can't match
+        if(len1 != len2)
+            return false;
+        
+        HashMap<Character, String> map = new HashMap<>();
+        
+        for(int i=0; i<len1; i++){
+            //if already has key in hashmap
+            if(map.containsKey(p2[i])){
+                if(!map.get(p2[i]).equals(s2[i]))
+                    return false;
+                else
+                    continue;
+            }else{
+                if(map.containsValue(s2[i]))
+                    return false;
+            }
+            //if nothing found, we need add this pair into map
+            map.put(p2[i],s2[i]);
+        }
+        
+        return true;
+    }
+}
