@@ -1,0 +1,33 @@
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2]
+
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        //store unique numbers in nums1
+        HashSet<Integer> mySet = new HashSet<>();
+        for(int i=0; i<nums1.length; i++){
+            if(!mySet.contains(nums1[i])){
+                mySet.add(nums1[i]);
+            }
+        }
+        
+        //store results
+        ArrayList<Integer> res = new ArrayList<>();
+        //to avoid duplicate numbers in nums2
+        Arrays.sort(nums2);
+        //check if numbers in nums2 are also in nums1
+        for(int j=0; j<nums2.length; j++){
+            if(j>0 && nums2[j]==nums2[j-1])
+                continue;
+            if(mySet.contains(nums2[j])){
+                res.add(nums2[j]);
+            }
+        }
+        //convert to arrays
+        int[] ans = new int[res.size()];
+        for(int i=0; i<res.size(); i++){
+            ans[i] = res.get(i);
+        }
+        return ans;
+    }
+}
