@@ -1,0 +1,43 @@
+Given the head of a linked list, rotate the list to the right by k places.
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        //edge case if null list
+        if(head==null)
+            return head;
+        //get last node and total number of nodes
+        int count = 0;
+        ListNode last = null;
+        for(ListNode temp=head; temp!=null; temp=temp.next){
+            count++;
+            last = temp;
+        }
+        //get pivot index
+        k = k % count;
+        if(k==0)
+            return head;
+        //get pivot
+        ListNode pivot = head;
+        ListNode prev = null;
+        for(int i=0; i<count-k; i++){
+            prev = pivot;
+            pivot = pivot.next;
+        }
+        //swap
+        prev.next = null;
+        last.next = head;
+        return pivot;
+        
+        
+    }
+}
