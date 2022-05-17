@@ -1,0 +1,36 @@
+Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+ 
+
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        //start from every cell in the board
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[0].length; j++){
+                if(helper(board, i, j, word, 0))
+                    return true;;
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean helper(char[][] board, int r, int c, String word, int ind){
+        //if we finished
+        if(ind == word.length())
+            return true;
+        //out of bound
+        if(r<0 || c<0 || r==board.length || c==board[0].length)
+            return false;
+        //if doesn't match
+        if(board[r][c] != word.charAt(ind))
+            return false;
+        //avoid back to used cell
+        board[r][c] ^= 300;
+        boolean k=(helper(board, r, c+1, word, ind+1) || helper(board, r+1, c, word, ind+1) || helper(board, r-1, c, word, ind+1) ||helper(board, r, c-1, word, ind+1));
+        board[r][c]^=300;
+        return k;
+    }
+}
