@@ -1,0 +1,49 @@
+Given the root of a binary tree, return the sum of values of its deepest leaves.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int deepestLeavesSum(TreeNode root) {
+        //edge case, if empty tree
+        if(root == null)
+            return 0;
+        //q is used to store nodes
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        //ans is used to store the value of nodes in same levels
+        List<Integer> ans = new ArrayList<>();
+        //this could help us to get the values in last level
+        while(!q.isEmpty()){
+            int size = q.size();
+            ans.clear();
+            for(int i=0; i<size; i++){
+                TreeNode temp = q.poll();
+                ans.add(temp.val);
+                if(temp.left!=null)
+                    q.add(temp.left);
+                if(temp.right!=null)
+                    q.add(temp.right);
+            }
+        }
+        //get answer
+        int res = 0;
+        for(int num:ans){
+            res+=num;
+        }
+        
+        return res;
+    }
+}
