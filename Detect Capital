@@ -1,0 +1,30 @@
+We define the usage of capitals in a word to be right when one of the following cases holds:
+
+All letters in this word are capitals, like "USA".
+All letters in this word are not capitals, like "leetcode".
+Only the first letter in this word is capital, like "Google".
+Given a string word, return true if the usage of capitals in it is right.
+
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        //count frequency of upper case
+        int countUp = 0;
+        for(int i=0; i<word.length(); i++){
+            if(word.charAt(i) < 'a'){
+                countUp++;
+            }
+        }
+        //if no caps
+        if(countUp==0){
+            return true;
+        }else if(countUp==word.length()){
+            //if only caps
+            return true;
+        }else if(countUp==1 && word.charAt(0)<'a'){
+            //if only first is caps
+            return true;
+        }
+        
+        return false;
+    }
+}
