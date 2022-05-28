@@ -1,0 +1,40 @@
+A self-dividing number is a number that is divisible by every digit it contains.
+
+For example, 128 is a self-dividing number because 128 % 1 == 0, 128 % 2 == 0, and 128 % 8 == 0.
+A self-dividing number is not allowed to contain the digit zero.
+
+Given two integers left and right, return a list of all the self-dividing numbers in the range [left, right].
+
+class Solution {
+    public List<Integer> selfDividingNumbers(int left, int right) {
+        //result contianer
+        List<Integer> res = new ArrayList<>();
+        //flag denotes whether current is self-dividing number
+        boolean flag = true;
+        for(int i=left; i<=right; i++){
+            int temp = i;
+            //repeatedly get number on each position
+            while(temp>0){
+                //edge case, if current number contains zero
+                if(temp%10 == 0){
+                    flag = false;
+                    break;
+                }
+                //if current number is not
+                if(i%(temp%10)!=0){
+                    flag = false;
+                    break;
+                }else{
+                    temp = temp/10;
+                }
+            }
+            if(flag){
+                res.add(i);
+            }
+            //reset flag
+            flag = true;
+        }
+        
+        return res;
+    }
+}
