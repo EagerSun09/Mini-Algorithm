@@ -1,0 +1,24 @@
+The power of the string is the maximum length of a non-empty substring that contains only one unique character.
+
+Given a string s, return the power of s.
+
+class Solution {
+    public int maxPower(String s) {
+        //manipulate s in char array
+        char[] temp = s.toCharArray();
+        int left = 0;
+        int res = 1;
+        //while we didn't walk through the whole array
+        while(left < temp.length){
+            int right = left;
+            //make sure we are always in array
+            while(right<temp.length-1 && temp[right] == temp[right+1]){
+                right++;
+            }
+            res = Math.max(res, right-left+1);
+            left = right+1;
+        }
+        
+        return res;
+    }
+}
