@@ -1,0 +1,42 @@
+In a deck of cards, each card has an integer written on it.
+
+Return true if and only if you can choose X >= 2 such that it is possible to split the entire deck into 1 or more groups of cards, where:
+
+Each group has exactly X cards.
+All the cards in each group have the same integer.
+
+class Solution {
+    public boolean hasGroupsSizeX(int[] deck) {
+        //get frequency of each number
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int num:deck){
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        //get the smallest frequency number
+        int base = Integer.MAX_VALUE;
+        for(int val:map.values()){
+            base = Math.min(base, val);
+        }
+        //if the smallest frequency is lower than 2
+        if(base < 2){
+            return false;
+        }
+        //if we can divide them evenly into groups
+        for(int i=base; i>=2; i--){
+            //flag indicates whether we fulfill the requirements
+            boolean flag = true;
+            for(int val:map.values()){
+                if(val%i != 0){
+                    flag = false;
+                }
+            }
+            if(flag){
+                return true;
+            }else{
+                flag = true;
+            }
+        }
+        
+        return false;
+    }
+}
