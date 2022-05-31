@@ -40,7 +40,7 @@ class Solution {
             }
             sta.push(temp);
         }
-        
+        //using stack to reverse order
         while(!sta.isEmpty()){
             ans.add(sta.pop());
         }
