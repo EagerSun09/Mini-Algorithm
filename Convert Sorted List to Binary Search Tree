@@ -1,0 +1,54 @@
+Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        return helper(head, null);
+    }
+    
+    public TreeNode helper(ListNode left, ListNode right){
+        //using two pointers to locate middle node
+        ListNode slow = left;
+        ListNode fast = left;
+        //base case, if we visited all nodes in the list
+        if(left == right)
+            return null;
+        //get middle node
+        while(fast!=right && fast.next!=right){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        //recursively build the tree
+        TreeNode root = new TreeNode(slow.val);
+        root.left = helper(left, slow);
+        root.right = helper(slow.next, right);
+        
+        return root;
+    }
+}
