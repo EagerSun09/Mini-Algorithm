@@ -1,0 +1,47 @@
+You are given an array target and an integer n.
+
+In each iteration, you will read a number from list = [1, 2, 3, ..., n].
+
+Build the target array using the following operations:
+
+"Push": Reads a new element from the beginning list, and pushes it in the array.
+"Pop": Deletes the last element of the array.
+If the target array is already built, stop reading more elements.
+Return a list of the operations needed to build target. The test cases are generated so that the answer is unique.
+
+class Solution {
+    public List<String> buildArray(int[] target, int n) {
+        //count indicates the correct value
+        int count = 1;
+        //ans is the answer list
+        List<String> ans = new ArrayList<>();
+        int cur = 0;
+        //we need to walk through whole list
+        while(cur < target.length){
+            //if we pop some values out, current value should be bigger than we expect
+            if(target[cur] > count){
+                //we keep adding push and pop until we the expect value is equal to current value in array
+                while(target[cur] > count){
+                    //keep adding words
+                    ans.add("Push");
+                    ans.add("Pop");
+                    //expected value will be increased by 1
+                    count++;
+                }
+                //current value will be pushed into array
+                ans.add("Push");
+                //current value will be increased by 1 and we move to next cell in the array
+                cur++;
+                //expected value will be increased by 1
+                count++;
+            }else{
+                //otherwise, we just push the expectated value into the array
+                ans.add("Push");
+                count++;
+                cur++;
+            }
+        }
+        //return the answer
+        return ans;
+    }
+}
