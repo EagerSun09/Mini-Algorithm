@@ -1,0 +1,26 @@
+Given strings s1, s2, and s3, find whether s3 is formed by an interleaving of s1 and s2.
+
+An interleaving of two strings s and t is a configuration where they are divided into non-empty substrings such that:
+
+class Solution {
+    public boolean isInterleave(String s1, String s2, String s3) {
+        //using dfs
+        char[] c1=s1.toCharArray(), c2=s2.toCharArray(), c3=s3.toCharArray();
+        if(c1.length+c2.length != c3.length)
+            return false;
+        return helper(c1, c2, c3, 0, 0, 0, new boolean[c1.length+1][c2.length+1]);
+    }
+    
+    public boolean helper(char[] c1, char[] c2, char[] c3, int p1, int p2, int p3, boolean[][] inValid){
+        if(inValid[p1][p2])
+            return false;
+        if(p3 == c3.length)
+            return true;
+        //c3[p3] could come frome c1[p1] or c2[p2], we check them 
+        boolean valid = p1<c1.length&&c1[p1]==c3[p3]&&helper(c1, c2, c3, p1+1, p2, p3+1, inValid) || 
+                          p2<c2.length&&c2[p2]==c3[p3]&&helper(c1, c2, c3, p1, p2+1, p3+1, inValid);
+        if(!valid)
+            inValid[p1][p2] = true;
+        return valid;
+    }
+}
