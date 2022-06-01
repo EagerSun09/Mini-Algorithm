@@ -1,0 +1,46 @@
+Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
+
+A root-to-leaf path is a path starting from the root and ending at any leaf node. A leaf is a node with no children.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        //dfs, temp stores values from root to current node
+        List<Integer> temp = new ArrayList<>();
+        helper(root, targetSum, 0, temp);
+        return ans;
+    }
+    
+    public void helper(TreeNode root, int t, int cur, List<Integer> temp){
+        //if out of tree
+        if(root == null)
+            return;
+        //add current node value into temp
+        temp.add(root.val);
+        //if sum is equal to target and itself is a leaf node
+        if(cur+root.val == t && root.left==null && root.right==null){
+            ans.add(new ArrayList<>(temp));
+        }else{
+            //visit its children
+            helper(root.left, t, cur+root.val, temp);
+            helper(root.right, t , cur+root.val, temp);
+        }
+        //remove current and go back to previous step
+        temp.remove(temp.size()-1);
+    }
+}
