@@ -1,0 +1,54 @@
+Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
+
+0 <= a, b, c, d < n
+a, b, c, and d are distinct.
+nums[a] + nums[b] + nums[c] + nums[d] == target
+You may return the answer in any order.
+
+class Solution {
+    List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        //using 3 sum to solve the problem
+        Arrays.sort(nums);
+        for(int i=0; i<=nums.length-4; i++){
+            if(i>0 && nums[i-1]==nums[i]){
+                continue;
+            }else{
+                //using 3 sum
+                helper(nums, i+1, target);
+            }
+        }
+        
+        return res;
+    }
+    
+    public void helper(int[] nums, int left, int target){
+        for(int l=left; l<nums.length; l++){
+            if(l>left && nums[l-1]==nums[l])
+                continue;
+            
+            int i = l+1;
+            int j = nums.length - 1;
+            while(i<j){
+                int sum = nums[left-1] + nums[l] + nums[i] + nums[j];
+                //if find, add them to res
+                if(sum == target){
+                    res.add(Arrays.asList(nums[left-1], nums[l], nums[i], nums[j]));
+                    j--;
+                    while(i<j && nums[j]==nums[j+1]){
+                        j--;
+                    }
+                }
+                //if sum bigger or smaller, since nums is sorted
+                //we move left pointer to right or right pointer to left
+                if(sum > target){
+                    j--;
+                }
+                if(sum < target){
+                    i++;
+                }
+            }
+            
+        }
+    }
+}
