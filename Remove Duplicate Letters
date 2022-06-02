@@ -1,0 +1,34 @@
+Given a string s, remove duplicate letters so that every letter appears once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
+
+ class Solution {
+    public String removeDuplicateLetters(String s) {
+        //c stores the last time each letter appears in string s
+        int[] c = new int[26];
+        for(int i=0; i<s.length(); i++){
+            char temp = s.charAt(i);
+            c[temp-'a'] = i;
+        }
+        //stack sta help up keep track the most recent char we met
+        Stack<Character> sta = new Stack<>();
+        //array plug helps us to track letters we have to plug before it appears again
+        boolean[] plug = new boolean[26];
+        for(int i=0; i<s.length(); i++){
+            int cur = s.charAt(i)-'a';
+            //if we had to plug it before, we can't add it into stack
+            if(plug[cur])
+                continue;
+            while(!sta.isEmpty() && (sta.peek()-'a')>cur && c[sta.peek()-'a']>i){
+                plug[sta.pop()-'a'] = false;
+            }
+            
+            sta.push((char)('a'+cur));
+            plug[cur] = true;
+        }
+        
+        StringBuffer sb = new StringBuffer();
+        while(!sta.isEmpty()){
+            sb.append(sta.pop());
+        }
+        return sb.reverse().toString();
+    }
+}
