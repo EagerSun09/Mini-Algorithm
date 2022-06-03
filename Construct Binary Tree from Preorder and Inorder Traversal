@@ -1,0 +1,45 @@
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+ /**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        //we need index of every num in inorder
+        //for each value from preorder, the left elements on the left sides of them in inorder is in its
+        //left subtree
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i=0; i<inorder.length; i++){
+            map.put(inorder[i], i);
+        }
+        TreeNode root = helper(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1, map);
+        
+        return root;
+    }
+    
+    public TreeNode helper(int[] preorder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd, HashMap<Integer, Integer> map){
+        if(pStart>pEnd || iStart>iEnd)
+            return null;
+        
+        TreeNode root = new TreeNode(preorder[pStart]);
+        
+        int inRoot = map.get(preorder[pStart]);
+        int leftNums = inRoot - iStart;
+        root.left = helper(preorder, pStart+1, pStart+leftNums, inorder, iStart, inRoot-1, map);
+        root.right = helper(preorder, pStart+leftNums+1, pEnd, inorder, inRoot+1, iEnd, map);
+        
+        return root;
+    }
+}
