@@ -1,0 +1,49 @@
+In a linked list of size n, where n is even, the ith node (0-indexed) of the linked list is known as the twin of the (n-1-i)th node, if 0 <= i <= (n / 2) - 1.
+
+For example, if n = 4, then node 0 is the twin of node 3, and node 1 is the twin of node 2. These are the only nodes with twins for n = 4.
+The twin sum is defined as the sum of a node and its twin.
+
+Given the head of a linked list with even length, return the maximum twin sum of the linked list.
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int pairSum(ListNode head) {
+        //use two pointers fast and slow to locate the middle node
+        ListNode slow = head;
+        ListNode fast = head;
+        int count = 0;
+        while(fast!=null && fast.next!=null){
+            count++;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        //use array ans to hold the summation of two nodes
+        int[] ans = new int[count];
+        fast = head;
+        count = 0;
+        while(fast!=slow){
+            ans[count++] = fast.val;
+            fast = fast.next;
+        }
+        while(count>0){
+            ans[--count] += slow.val;
+            slow = slow.next;
+        }
+        //get the maximum answer
+        int res = Integer.MIN_VALUE;
+        for(int num:ans){
+            res = Math.max(res, num);
+        }
+        
+        return res;
+    }
+}
