@@ -1,0 +1,41 @@
+You are given an array of strings products and a string searchWord.
+
+Design a system that suggests at most three product names from products after each character of searchWord is typed. Suggested products should have common prefix with searchWord. If there are more than three products with a common prefix return the three lexicographically minimums products.
+
+Return a list of lists of the suggested products after each character of searchWord is typed.
+
+class Solution {
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        //i-th list in res contains the string that has length of i for common prefix
+        List<List<String>> res = new ArrayList<>();
+        for(int i=0; i<searchWord.length(); i++){
+            res.add(new ArrayList<>());
+        }
+        Arrays.sort(products);
+        //go through all strings in products
+        //get their common length
+        //add it to the corresponding list, if list size is equal to 3, we skip current list
+        for(String p:products){
+            int commonLen = helper(p, searchWord);
+            for(int i=0; i<commonLen; i++){
+                List<String> temp = res.get(i);
+                if(temp.size() == 3){
+                    continue;
+                }else{
+                    temp.add(p);
+                }
+            }
+        }
+        
+        return res;
+    }
+    
+    public int helper(String s1, String s2){
+        int idx = 0;
+        for(; idx<Math.min(s1.length(), s2.length()); idx++){
+            if(s1.charAt(idx) != s2.charAt(idx))
+                return idx;
+        }
+        return idx;
+    }
+}
