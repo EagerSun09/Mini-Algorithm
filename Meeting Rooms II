@@ -1,0 +1,29 @@
+Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the minimum number of conference rooms required.
+
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        //pq will sort the meetings based on their ending times
+        //arrays will let meetings sorted by their start times
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->(a[1]-b[1]));
+        Arrays.sort(intervals, (a,b)->helper(a,b));
+        int nums = 0;
+        //add each of them into pq, if will the earliest meeting is not end
+        //but new meeting is happening, one extra room will be created(pq.size()+1)
+        for(int i=0; i<intervals.length; i++){
+            if(pq.isEmpty()){
+                pq.add(intervals[i]);
+            }else{
+                int[] earliest = pq.peek();
+                if(earliest[1] <= intervals[i][0]){
+                    pq.poll();
+                }
+                pq.add(intervals[i]);
+            }
+        }
+        return pq.size();
+    }
+    
+    public int helper(int[] a, int[] b){
+        return a[0]-b[0];
+    }
+}
