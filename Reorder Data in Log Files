@@ -1,0 +1,41 @@
+You are given an array of logs. Each log is a space-delimited string of words, where the first word is the identifier.
+
+There are two types of logs:
+
+Letter-logs: All words (except the identifier) consist of lowercase English letters.
+Digit-logs: All words (except the identifier) consist of digits.
+Reorder these logs so that:
+
+The letter-logs come before all digit-logs.
+The letter-logs are sorted lexicographically by their contents. If their contents are the same, then sort them lexicographically by their identifiers.
+The digit-logs maintain their relative ordering.
+Return the final order of the logs.
+
+class Solution {
+    public String[] reorderLogFiles(String[] logs) {
+        //use lambda function
+        Arrays.sort(logs, (a, b)->(helper(a,b)));
+        
+        return logs;
+    }
+    
+    public int helper(String a, String b){
+        //check whether a and b is letter string
+        int judgeA = a.indexOf(" ")+1;
+        int judgeB = b.indexOf(" ")+1;
+        boolean isLetterA = Character.isLetter(a.charAt(judgeA));
+        boolean isLetterB = Character.isLetter(b.charAt(judgeB));
+        //comapre them
+        if(isLetterA && isLetterB){
+            int cmp = a.substring(judgeA).compareTo(b.substring(judgeB));
+            if(cmp != 0) return cmp;
+            return a.compareTo(b);
+        }else if(isLetterA && !isLetterB){
+            return -1;
+        }else if(!isLetterA && isLetterB){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+}
