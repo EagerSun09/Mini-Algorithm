@@ -1,0 +1,30 @@
+A binary string is monotone increasing if it consists of some number of 0's (possibly none), followed by some number of 1's (also possibly none).
+
+You are given a binary string s. You can flip s[i] changing it from 0 to 1 or from 1 to 0.
+
+Return the minimum number of flips to make s monotone increasing.
+
+class Solution {
+    public int minFlipsMonoIncr(String s) {
+        int len = s.length();
+        //prefix contains how many 1's on the left side of current node
+        //suffix contains number of 0's on the right side of current position
+        int[] prefix = new int[len];
+        int[] suffix = new int[len];
+        prefix[0] = s.charAt(0)=='1'? 1:0;
+        suffix[len-1] = s.charAt(len-1)=='0'? 1:0;
+        for(int i=1,j=len-2; i<len; i++,j--){
+            prefix[i] = prefix[i-1] + (s.charAt(i)=='1'? 1:0);
+            suffix[j] = suffix[j+1] + (s.charAt(j)=='0'? 1:0);
+        }
+        //number of flipping we need is prefix+suffix
+        int minimum = Integer.MAX_VALUE;
+        for(int i=-1; i<=len-1; i++){
+            int left = (i==-1)? 0:prefix[i];
+            int right = (i==len-1)? 0:suffix[i+1];
+            minimum = Math.min(minimum, left+right);
+        }
+        
+        return minimum;
+    }
+}
