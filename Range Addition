@@ -1,0 +1,24 @@
+You are given an integer length and an array updates where updates[i] = [startIdxi, endIdxi, inci].
+
+You have an array arr of length length with all zeros, and you have some operation to apply on arr. In the ith operation, you should increment all the elements arr[startIdxi], arr[startIdxi + 1], ..., arr[endIdxi] by inci.
+
+Return arr after applying all the updates.
+
+class Solution {
+    public int[] getModifiedArray(int length, int[][] updates) {
+        //set the start point equal to upates[i][2], and  set the position after end point equal to -upates[i][2]
+        int[] res = new int[length];
+        for(int i=0; i<updates.length; i++){
+            res[updates[i][0]] += updates[i][2];
+            if(updates[i][1]+1<length)
+                res[updates[i][1]+1] -= updates[i][2];
+        }
+        
+        
+        for(int i=1; i<length; i++){
+            res[i] += res[i-1];
+        }
+        
+        return res;
+    }
+}
