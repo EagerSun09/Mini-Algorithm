@@ -1,0 +1,31 @@
+We can shift a string by shifting each of its letters to its successive letter.
+
+For example, "abc" can be shifted to be "bcd".
+We can keep shifting the string to form a sequence.
+
+For example, we can keep shifting "abc" to form the sequence: "abc" -> "bcd" -> ... -> "xyz".
+Given an array of strings strings, group all strings[i] that belong to the same shifting sequence. You may return the answer in any order.
+
+class Solution {
+    List<List<String>> ans = new ArrayList<>();
+    public List<List<String>> groupStrings(String[] strings) {
+        //map: key->relative distance, value->string itself
+        HashMap<String, List<String>> map = new HashMap<>();
+        for(String s:strings){
+            String key = "";
+            for(int i=0; i<s.length(); i++){
+                int d = (s.charAt(i) - s.charAt(0) + 26) % 26;
+                key += d + ".";
+            }
+            List<String> temp = map.getOrDefault(key, new ArrayList<>());
+            temp.add(s);
+            map.put(key, temp);
+        }
+        
+        for(String s:map.keySet()){
+            ans.add(map.get(s));
+        }
+        
+        return ans;
+    }
+}
