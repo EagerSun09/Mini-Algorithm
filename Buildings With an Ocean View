@@ -1,0 +1,25 @@
+There are n buildings in a line. You are given an integer array heights of size n that represents the heights of the buildings in the line.
+
+The ocean is to the right of the buildings. A building has an ocean view if the building can see the ocean without obstructions. Formally, a building has an ocean view if all the buildings to its right have a smaller height.
+
+Return a list of indices (0-indexed) of buildings that have an ocean view, sorted in increasing order.
+
+class Solution {
+    public int[] findBuildings(int[] heights) {
+        //from right to left
+        //if current is bigger than the highest on its right side, update highest and add current into answer
+        int len = heights.length;
+        int max = Integer.MIN_VALUE;
+        List<Integer> pq = new ArrayList<>();
+        for(int i=len-1; i>=0; i--){
+            if(heights[i] > max){
+                pq.add(i);
+                max = heights[i];
+            }else{
+                continue;
+            }
+        }
+        Collections.sort(pq);
+        return pq.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
