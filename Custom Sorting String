@@ -1,0 +1,30 @@
+You are given two strings order and s. All the words of order are unique and were sorted in some custom order previously.
+
+Permute the characters of s so that they match the order that order was sorted. More specifically, if a character x occurs before a character y in order, then x should occur before y in the permuted string.
+
+Return any permutation of s that satisfies this property
+
+class Solution {
+    public String customSortString(String order, String s) {
+        //first solution: using hashmap to store the order of chars, using priorityqueue to construct string
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(int i=0; i<order.length(); i++){
+            map.put(order.charAt(i), i);
+        }
+        
+        PriorityQueue<Character> pq = new PriorityQueue<>((a,b) -> (map.getOrDefault(a,Integer.MAX_VALUE)-map.getOrDefault(b, Integer.MAX_VALUE)));
+        
+        for(int i=0; i<s.length(); i++){
+            pq.add(s.charAt(i));
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        while(!pq.isEmpty()){
+            sb.append(pq.poll());
+        }
+        
+        return sb.toString();
+        //second solution: using hashmap to contain chars and their frequencies, then walk through the order to add each of them and finally append
+        //chars that are not in order
+    }
+}
