@@ -1,0 +1,49 @@
+Given a string s which represents an expression, evaluate this expression and return its value. 
+
+The integer division should truncate toward zero.
+
+You may assume that the given expression is always valid. All intermediate results will be in the range of [-231, 231 - 1].
+
+Note: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().
+
+ class Solution {
+    public int calculate(String s) {
+        //using stack to track most recently values
+        Stack<Integer> sta = new Stack<>();
+        char prev = '+';
+        int sum = 0;
+        int num = 0;
+        for(int i=0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if(Character.isDigit(c)){
+                num = num*10 + c - '0';
+            }
+            //stack will only contains the result of - * and /
+            if(helper(c) || i==(s.length()-1)){
+                if(prev == '+'){
+                    sta.push(num);
+                }else if(prev == '-'){
+                    sta.push(-1*num);
+                }else if(prev == '*'){
+                    sta.push(sta.pop()*num);
+                }else if(prev== '/'){
+                    sta.push(sta.pop()/num);
+                }
+                num = 0;
+                prev = c;
+            }
+            
+        }
+        while(!sta.isEmpty()){
+            sum += sta.pop();
+        }
+        
+        return sum;
+    }
+    
+    public boolean helper(char c){
+        return c=='+' || c=='-' || c=='*' || c=='/';
+    }
+    
+
+}
