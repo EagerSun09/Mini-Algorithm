@@ -1,0 +1,55 @@
+Given the root of a binary tree, return the vertical order traversal of its nodes' values. (i.e., from top to bottom, column by column).
+
+If two nodes are in the same row and column, the order should be from left to right.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    //resMap contains all result and colMap stores the column each node belongs to
+    List<List<Integer>> res = new ArrayList<>();
+    HashMap<Integer, List<Integer>> resMap = new HashMap<>();
+    HashMap<TreeNode, Integer> colMap = new HashMap<>();
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        if(root == null)
+            return res;
+        int start = 0;
+        Queue<TreeNode> q = new LinkedList<>();
+        colMap.put(root, 0);
+        q.add(root);
+        //using bfs to visit nodes from left to right
+        while(!q.isEmpty()){
+            TreeNode temp = q.poll();
+            int colNo = colMap.get(temp);
+            List<Integer> tempL = resMap.getOrDefault(colNo, new ArrayList<>());
+            tempL.add(temp.val);
+            resMap.put(colNo, tempL);
+            if(temp.left != null){
+                colMap.put(temp.left, colNo-1);
+                q.add(temp.left);
+            }
+            if(temp.right != null){
+                colMap.put(temp.right, colNo+1);
+                q.add(temp.right);
+            }
+            start = Math.min(start, colNo);
+        }
+        while(resMap.containsKey(start)){
+            res.add(resMap.get(start++));
+        }
+        
+        return res;
+    }
+}
