@@ -1,0 +1,55 @@
+Given two nodes of a binary tree p and q, return their lowest common ancestor (LCA).
+
+Each node will have a reference to its parent node. The definition for Node is below:
+
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node parent;
+}
+According to the definition of LCA on Wikipedia: "The lowest common ancestor of two nodes p and q in a tree T is the lowest node that has both p and q as descendants (where we allow a node to be a descendant of itself)."
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node parent;
+};
+*/
+
+class Solution {
+    public Node lowestCommonAncestor(Node p, Node q) {
+        //get the depth of each node
+        int depthP = getDepth(p);
+        int depthQ = getDepth(q);
+        int diff = depthP- depthQ;
+        //diff<0 means q is deeper, diff>0 means p is deeper
+        //we need to keep them in same depth
+        while(diff < 0){
+            q = q.parent;
+            diff++;
+        }
+        while(diff > 0){
+            p = p.parent;
+            diff--;
+        }
+        //keep searching for common ancestor
+        while(p != q){
+            p = p.parent;
+            q = q.parent;
+        }
+        return p;
+    }
+    
+    public int getDepth(Node n){
+        int depth = 0;
+        while(n != null){
+            depth++;
+            n = n.parent;
+        }
+        return depth;
+    }
+}
