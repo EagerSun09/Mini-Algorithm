@@ -1,0 +1,28 @@
+Given an integer array nums and an integer k, return true if nums has a continuous subarray of size at least two whose elements sum up to a multiple of k, or false otherwise.
+
+An integer x is a multiple of k if there exists an integer n such that x = n * k. 0 is always a multiple of k.
+
+class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        //the sum and index of last number
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int sum = 0;
+        for(int i=0; i<nums.length; i++){
+            sum += nums[i];
+            sum %= k;
+            //if we get a multiple of k and length is at least 2
+            if(sum==0 && i>=1){
+                return true;
+            }
+            //if by deleting some continuous values we can get a multiple of k and length of which is at least 2
+            if(map.containsKey(sum) && i-map.get(sum)>1){
+                return true;
+            }
+            if(!map.containsKey(sum)){
+               map.put(sum, i);
+            }
+        }
+        
+        return false;
+    }
+}
