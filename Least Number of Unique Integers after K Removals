@@ -1,0 +1,29 @@
+Given an array of integers arr and an integer k. Find the least number of unique integers after removing exactly k elements.
+
+class Solution {
+    public int findLeastNumOfUniqueInts(int[] arr, int k) {
+        //number, occurence
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int num:arr){
+            map.put(num, map.getOrDefault(num, 0)+1);
+        }
+        
+        int[] res = new int[map.size()];
+        int idx = 0;
+        for(int val:map.values()){
+            res[idx++] = val;
+        }
+        Arrays.sort(res);
+        idx = 0;
+        //deleting starts at the number that has lowest occurence
+        while(k > 0){
+            k -= res[idx];
+            if(k >= 0){
+                idx++;
+            }else{
+                break;
+            }
+        }
+        return res.length - idx;
+    }
+}
