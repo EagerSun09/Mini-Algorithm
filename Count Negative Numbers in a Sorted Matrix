@@ -1,0 +1,33 @@
+Given a m x n matrix grid which is sorted in non-increasing order both row-wise and column-wise, return the number of negative numbers in grid.
+
+class Solution {
+    public int countNegatives(int[][] grid) {
+        int col = grid[0].length;
+        int res = 0;
+        for(int[] g:grid){
+            //if first less than 0, whole row less than 0
+            if(g[0] < 0){
+                res += col;
+                continue;
+            }
+            //if last one bigger than 0, whole row bigger than 0
+            if(g[col-1] >= 0){
+                continue;
+            }
+            //binary search for the col that is less than 0
+            int l = 0;
+            int r =col-1;
+            while(l < r){
+                int mid = l + (r-l)/2;
+                if(g[mid] < 0){
+                    r = mid;
+                }else{
+                    l = mid + 1;
+                }
+            }
+            res += (col - l);
+        }
+        
+        return res;
+    }
+}
