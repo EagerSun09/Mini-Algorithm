@@ -1,0 +1,29 @@
+Given an array of strings words and an integer k, return the k most frequent strings.
+
+Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+class Solution {
+    List<String> res = new ArrayList<>();
+    public List<String> topKFrequent(String[] words, int k) {
+        HashMap<String, Integer> map = new HashMap<>();
+        //get words and their occurences
+        for(String word:words){
+            map.put(word, map.getOrDefault(word,0)+1);
+        }
+        //put them into a list
+        for(String s:map.keySet()){
+            res.add(s);
+        }
+        //sort result list based on given criterion
+        Collections.sort(res, (s1,s2)->(helper(s1,s2,map)));
+        return res.subList(0,k);
+    }
+    public int helper(String s1, String s2, HashMap map){
+        if(map.get(s1).equals(map.get(s2))){
+            return s1.compareTo(s2);
+        }else{
+            return ((int)map.get(s2) - (int)map.get(s1));
+        }
+    }
+    
+}
