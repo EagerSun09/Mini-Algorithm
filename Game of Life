@@ -1,0 +1,42 @@
+According to Wikipedia's article: "The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
+
+The board is made up of an m x n grid of cells, where each cell has an initial state: live (represented by a 1) or dead (represented by a 0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules (taken from the above Wikipedia article):
+
+Any live cell with fewer than two live neighbors dies as if caused by under-population.
+Any live cell with two or three live neighbors lives on to the next generation.
+Any live cell with more than three live neighbors dies, as if by over-population.
+Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+The next state is created by applying the above rules simultaneously to every cell in the current state, where births and deaths occur simultaneously. Given the current state of the m x n grid board, return the next state.
+
+class Solution {
+    public void gameOfLife(int[][] board) {
+        int row = board.length;
+        int col = board[0].length;
+        int[][] temp = new int[row][col];
+        //go cells one by one and check if requirement meets
+        for(int r=0; r<row; r++){
+            for(int c=0; c<col; c++){
+                int cur = helper(board, r-1,c-1) + helper(board, r-1,c) + helper(board, r-1,c+1) + helper(board, r+1,c+1)
+                         +helper(board, r,c-1) + helper(board, r,c+1) + helper(board, r+1,c-1) + helper(board, r+1,c);
+                if(board[r][c] == 1){
+                    temp[r][c] = (cur<2 || cur>3)? 0:1;
+                }else{
+                    temp[r][c] = (cur==3)? 1:0;
+                }
+            }
+        }
+        
+        for(int r=0; r<row; r++){
+            for(int c=0; c<col; c++){
+                board[r][c] = temp[r][c];
+            }
+        }
+    }
+    
+    public int helper(int[][] b, int r, int c){
+        if(r<0 || c<0 || r>=b.length || c>=b[0].length || b[r][c]==0)
+            return 0;
+        else
+            return 1;
+    }
+}
