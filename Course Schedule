@@ -1,0 +1,49 @@
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return true if you can finish all courses. Otherwise, return false.
+
+class Solution {
+    public boolean canFinish(int n, int[][] pre) {
+        //preparation
+        //calculate in-degrees and the prerequisites of each course
+        int[] degree = new int[n];
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        for(int i=0; i<n; i++){
+            map.put(i, new ArrayList<>());
+        }
+        for(int i=0; i<pre.length; i++){
+            List<Integer> cur = map.get(pre[i][0]);
+            degree[pre[i][1]]++;
+            cur.add(pre[i][1]);
+            map.put(pre[i][0], cur);
+        }
+        //using BFS, starting from courses with 0 in-degrees
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<n; i++){
+            if(degree[i] == 0){
+                q.add(i);
+            }
+        }
+        while(!q.isEmpty()){
+            int cur = q.poll();
+            for(int idx:map.get(cur)){
+                if(degree[idx]<=0){
+                    continue;
+                }else{
+                    degree[idx]--;
+                    if(degree[idx] == 0){
+                        q.add(idx);
+                    }
+                }
+            }
+        }
+        
+        for(int d:degree){
+            if(d > 0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
