@@ -1,0 +1,30 @@
+Given a sorted integer array arr, two integers k and x, return the k closest integers to x in the array. The result should also be sorted in ascending order.
+
+An integer a is closer to x than an integer b if:
+
+|a - x| < |b - x|, or
+|a - x| == |b - x| and a < b
+
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        //use pq to keep smaller closer to top of the pq
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->(helper(a, b, k, x)));
+        for(int n:arr){
+            pq.add(n);
+        }
+        List<Integer> res = new ArrayList<>();
+        for(int i=0; i<k; i++){
+            res.add(pq.poll());
+        }
+        Collections.sort(res);
+        return res;
+    }
+    
+    public int helper(int a, int b, int k, int x){
+        if(Math.abs(a-x)==Math.abs(b-x)){
+            return a-b;
+        }else{
+            return Math.abs(a-x)-Math.abs(b-x);
+        }
+    }
+}
