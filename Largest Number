@@ -1,0 +1,25 @@
+class Solution {
+    public String largestNumber(int[] ns) {
+        //convert integers to string
+        //sort strings following the rules given in question
+        String[] nums = new String[ns.length];
+        for(int i=0; i<nums.length; i++){
+            nums[i] = String.valueOf(ns[i]);
+        }
+        Arrays.sort(nums, (a,b)->(helper(a,b)));
+        String res = "";
+        for(String num:nums){
+            res += num;
+        }
+        if(res.charAt(0)=='0')
+            return "0";
+        return res;
+    }
+    
+    public int helper(String a, String b){
+        String s1 = a + b;
+        String s2 = b + a;
+        return s2.compareTo(s1);
+        
+    }
+}
