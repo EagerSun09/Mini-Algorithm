@@ -1,0 +1,49 @@
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return the ordering of courses you should take to finish all courses. If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
+
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        //the alg is same as bfs, we also go to the node with in-degree==0
+        //then update other nodes
+        int[] inDegree = new int[numCourses];
+        boolean[] seen = new boolean[numCourses];
+        HashMap<Integer, HashSet<Integer>> map = new HashMap<>();
+        List<Integer> res = new ArrayList<>();
+        for(int[] pre:prerequisites){
+            inDegree[pre[0]]++;
+            HashSet<Integer> cur = map.getOrDefault(pre[1], new HashSet<>());
+            cur.add(pre[0]);
+            map.put(pre[1],cur);
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<numCourses; i++){
+            if(inDegree[i] == 0){
+                seen[i] = true;
+                q.add(i);
+            }
+        }
+        while(!q.isEmpty()){
+            int now = q.poll();
+            res.add(now);
+            HashSet<Integer> temp = map.get(now);
+            if(temp == null){
+                continue;
+            }
+            for(int t:temp){
+                inDegree[t]--;
+                if(inDegree[t]==0 && !seen[t]){
+                    seen[t] = true;
+                    q.add(t);
+                }
+            }
+        }
+        int[] ans = new int[res.size()];
+        for(int i=0; i<ans.length; i++){
+            ans[i] = res.get(i);
+        }
+        int[] falseReturn = new int[0];
+        return ans.length==numCourses? ans:falseReturn;
+    }
+}
