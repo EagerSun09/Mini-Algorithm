@@ -1,0 +1,37 @@
+A string s is called good if there are no two different characters in s that have the same frequency.
+
+Given a string s, return the minimum number of characters you need to delete to make s good.
+
+The frequency of a character in a string is the number of times it appears in the string. For example, in the string "aab", the frequency of 'a' is 2, while the frequency of 'b' is 1.
+
+class Solution {
+    public int minDeletions(String s) {
+        //first, get frequency of every character
+        //then sort them
+        //each time we get a duplicated frequency, decrease it by 1 and insert back to the heap
+        int[] board = new int[26];
+        for(char cur:s.toCharArray()){
+            board[cur-'a']++;
+        }
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a,b)->(b-a));
+        for(int cur:board){
+             if(cur==0){
+                 continue;
+             }
+             maxHeap.add(cur);
+        }
+        int count = 0;
+        while(maxHeap.size()>0){
+            int cur = maxHeap.poll();
+            if(maxHeap.size() == 0){
+                return count;
+            }
+            if(cur == maxHeap.peek()){
+                count++;
+                if(cur > 1)
+                    maxHeap.add(cur-1);
+            }
+        }
+        return count;
+    }
+}
