@@ -1,0 +1,19 @@
+class Solution {
+    public int minMoves2(int[] nums) {
+        //find the median
+        //first sort array, then the position of the median is based on the length of the array
+        Arrays.sort(nums);
+        int move = 0;
+        int median = 0;
+        if(nums.length%2 == 1){
+            median = nums[nums.length/2];
+        }else{
+            median = (nums[nums.length/2-1]+nums[nums.length/2])/2;
+        }
+        
+        for(int num:nums){
+            move += Math.abs(median-num);
+        }
+        return move;
+    }
+}
