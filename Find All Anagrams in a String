@@ -1,0 +1,36 @@
+Given two strings s and p, return an array of all the start indices of p's anagrams in s. You may return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        //get the occurence of each char in p and store it in an array
+        //then use the sliding window
+        List<Integer> res = new ArrayList();
+        if(s == null || s.length() == 0) return res;
+        int[] tracker = new int[26];
+        for(char c:p.toCharArray()){
+            tracker[c-'a']++;
+        }
+        int l=0, r=0;
+        int count = p.length();
+        for(; r<s.length(); r++){
+            
+            char cur = s.charAt(r);
+            if(--tracker[cur-'a'] >= 0){
+                count--;
+            }
+            if(r-l >= p.length()){
+                char lChar = s.charAt(l);
+                if(++tracker[lChar-'a'] > 0){
+                    count++;
+                }
+                l++;
+            }
+            if(count == 0){
+                res.add(l);
+            }
+        }
+        return res;
+    }
+}
