@@ -1,0 +1,35 @@
+A valid IP address consists of exactly four integers separated by single dots. Each integer is between 0 and 255 (inclusive) and cannot have leading zeros.
+
+For example, "0.1.2.201" and "192.168.1.1" are valid IP addresses, but "0.011.255.245", "192.168.1.312" and "192.168@1.1" are invalid IP addresses.
+Given a string s containing only digits, return all possible valid IP addresses that can be formed by inserting dots into s. You are not allowed to reorder or remove any digits in s. You may return the valid IP addresses in any order.
+
+class Solution {
+    List<String> res = new ArrayList<>();
+    public List<String> restoreIpAddresses(String s) {
+        //using backtrack, the maximum length of each number is 3
+        //so we try from length 1 to 3
+        int[] ip = new int[4];
+        helper(s, 0, ip, 0);
+        return res;
+    }
+    
+    public void helper(String s, int idx, int[] ip, int count){
+        if(count==4 && idx==s.length()){
+            String temp = ip[0] + "." + ip[1] + "." + ip[2] + "." + ip[3];
+            res.add(temp);
+            return;
+        }
+        if(idx==s.length() || count==4){
+            return;
+        }
+        
+        for(int i=1; i<=3&&idx+i<=s.length(); i++){
+            int val = Integer.valueOf(s.substring(idx,i+idx));
+            if(val > 255 || (i >= 2  && s.charAt(idx) == '0')) 
+                break;
+            ip[count] = val;
+            helper(s, idx+i, ip, count+1);
+            ip[count] = -1;
+        }
+    }
+}
