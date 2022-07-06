@@ -1,0 +1,26 @@
+Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        //two pointers, like sliding window
+        List<Integer> res = new ArrayList<>();
+        Arrays.sort(nums);
+        int len = nums.length;
+        int l=0;
+        while(l < len){
+            int r = l+1;
+            while(r < len){
+                if(nums[l] == nums[r]){
+                    r++;
+                }else{
+                    break;
+                }
+            }
+            if(r-l > len/3){
+                res.add(nums[l]);
+            }
+            l = r;
+        }
+        return res;
+    }
+}
