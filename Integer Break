@@ -1,0 +1,17 @@
+Given an integer n, break it into the sum of k positive integers, where k >= 2, and maximize the product of those integers.
+
+Return the maximum product you can get.
+
+class Solution {
+    public int integerBreak(int n) {
+        //using dp, we calculate the maximum product of each position and move to next one
+        int[] dp = new int[n+1];
+        dp[1] = 1;
+        for(int i=2; i<n+1; i++){
+            for(int j=1; j<i; j++){
+                dp[i] = Math.max(dp[i],Math.max(i-j,dp[i-j])*j);
+            }
+        }
+        return dp[n];
+    }
+}
