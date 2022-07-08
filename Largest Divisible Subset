@@ -1,0 +1,46 @@
+Given a set of distinct positive integers nums, return the largest subset answer such that every pair (answer[i], answer[j]) of elements in this subset satisfies:
+
+answer[i] % answer[j] == 0, or
+answer[j] % answer[i] == 0
+If there are multiple solutions, return any of them.
+
+class Solution {
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        List<Integer> res = new ArrayList<>();
+        Arrays.sort(nums);
+        int len = nums.length;
+        int[] prev = new int[nums.length];
+        prev[0] = -1;
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int maxLen = 1;
+        int lastPos = 0;
+        
+        //prev store the nearest dividor of i-th num in nums
+        //dp stores the maximum length for i-th num
+        for(int i=1; i<nums.length; i++){
+            int max = 0;
+            int pointer = -1;
+            for(int j=i-1; j>=0; j--){
+                if(nums[i]%nums[j] != 0){
+                    continue;
+                }
+                if(max < dp[j]){
+                    max = dp[j];
+                    pointer = j;
+                }
+            }
+            dp[i] = max+1;
+            prev[i] = pointer;
+            if(maxLen < dp[i]){
+                maxLen = dp[i];
+                lastPos = i;
+            }
+        }
+        while(lastPos != -1){
+            res.add(nums[lastPos]);
+            lastPos = prev[lastPos];
+        }
+        return res;
+    }
+}
