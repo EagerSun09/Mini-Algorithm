@@ -1,0 +1,35 @@
+An additive number is a string whose digits can form an additive sequence.
+
+A valid additive sequence should contain at least three numbers. Except for the first two numbers, each subsequent number in the sequence must be the sum of the preceding two.
+
+Given a string containing only digits, return true if it is an additive number or false otherwise.
+
+Note: Numbers in the additive sequence cannot have leading zeros, so sequence 1, 2, 03 or 1, 02, 3 is invalid.
+
+ class Solution {
+    public boolean isAdditiveNumber(String num) {
+        //using backtracking
+        //the length of first number cant be greater than len/2
+        //we test every valid length of first two numbers
+        int len = num.length();
+        for(int i=1; i<=len/2; i++){
+            if(num.charAt(0)=='0' && i>1) return false;
+            long first = Long.valueOf(num.substring(0,i));
+            for(int j=1; Math.max(j,i)<=(len-i-j); j++){
+                if(num.charAt(i)=='0' && j>1)break;
+                long second = Long.valueOf(num.substring(i,i+j));
+                if(helper(first,second,i+j,num))
+                    return true;
+            }
+        }
+        return false;
+    }
+    public boolean helper(long first, long second, int idx, String num){
+         if(idx == num.length()){
+             return true;
+         }
+        long temp = first+second;
+        first = second;
+        return num.startsWith(String.valueOf(temp),idx) && helper(first,temp,idx+String.valueOf(temp).length(),num);
+    }
+}
