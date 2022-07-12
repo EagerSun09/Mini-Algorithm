@@ -1,0 +1,41 @@
+You are given an integer array matchsticks where matchsticks[i] is the length of the ith matchstick. You want to use all the matchsticks to make one square. You should not break any stick, but you can link them up, and each matchstick must be used exactly one time.
+
+Return true if you can make this square and false otherwise.
+
+class Solution {
+    public boolean makesquare(int[] sticks) {
+        //use backtracking
+        int edge = 0;
+        for(int stick:sticks){
+            edge += stick;
+        }
+        if(edge%4 != 0){
+            return false;
+        }else{
+            edge = edge/4;
+        }
+        Arrays.sort(sticks);
+        
+        return helper(sticks, new int[4], sticks.length-1, edge);
+    }
+    
+    public boolean helper(int[] sticks, int[] sum, int idx, int t){
+        //if we checked all elements in sticks
+        if(idx < 0){
+            return true;
+        }
+        for(int i=0; i<4; i++){
+            //if larger than target
+            if(sum[i]+sticks[idx]>t){
+                continue;
+            }
+            //else we try to add it to each cell
+            sum[i] += sticks[idx];
+            if(helper(sticks, sum, idx-1, t)){
+                return true;
+            }
+            sum[i] -= sticks[idx];
+        }
+        return false;
+    }
+}
