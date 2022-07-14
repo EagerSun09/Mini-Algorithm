@@ -1,0 +1,25 @@
+Given an integer array nums, return all the different possible increasing subsequences of the given array with at least two elements. You may return the answer in any order.
+
+The given array may contain duplicates, and two equal integers should also be considered a special case of increasing sequence.
+
+class Solution {
+    HashSet<List<Integer>> set = new HashSet<>();
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        //use back tracking
+        helper(nums, 0, new ArrayList<>());
+        return new ArrayList<>(set);
+    }
+    
+    public void helper(int[] nums, int idx, List<Integer> temp){
+        if(temp.size()>1){
+            set.add(new ArrayList<>(temp));
+        }
+        for(int i=idx; i<nums.length; i++){
+            if(temp.size()==0 || temp.get(temp.size()-1)<=nums[i]){
+                temp.add(nums[i]);
+                helper(nums, i+1, temp);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+}
